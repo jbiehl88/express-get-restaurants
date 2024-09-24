@@ -21,19 +21,19 @@ app.get("/restaurants/:id", async (req, res) => {
 
 app.post("/restaurants/new", async (req, res) => {
 	const createRestaurant = await Restaurant.create(req.body.Restaurant)
-	res.send(`Restaurant Created!`)
+	res.json(createRestaurant)
 })
 
 app.put("/restaurants/:id", async (req, res) => {
 	const restId = req.params.id
 	const updateRest = await Restaurant.update(req.body, { where: { id: restId } })
-	res.send("Restaurant Updated!")
+	res.json(updateRest)
 })
 
 app.delete("/restaurants/:id", async (req, res) => {
 	const restId = req.params.id
 	const deletedRest = await Restaurant.destroy({ where: { id: restId } })
-	res.send("Restaurant Deleted!")
+	res.json(deletedRest)
 })
 
 module.exports = app
