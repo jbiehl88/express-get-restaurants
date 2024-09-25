@@ -64,7 +64,6 @@ describe("Restaurant", () => {
 	})
 	it("checks validator errors", async () => {
 		const response = await request(app).post("/restaurants/new")
-		console.log(response.body)
 		expect(response.body.error).toContainEqual(
 			expect.objectContaining({
 				type: "field",
