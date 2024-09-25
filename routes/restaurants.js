@@ -1,5 +1,5 @@
 const express = require("express")
-const { Restaurant } = require("../models/index")
+const { Restaurant, Menu, Item } = require("../models/index")
 const { check, validationResult } = require("express-validator")
 
 const restRouter = express.Router()

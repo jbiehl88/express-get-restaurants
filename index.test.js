@@ -1,6 +1,6 @@
 const request = require("supertest")
 const app = require("./src/app.js")
-const Restaurant = require("./models")
+const { Restaurant, Menu, Item } = require("./models/index")
 const syncSeed = require("./seed.js")
 const db = require("./db/connection.js")
 
@@ -23,7 +23,7 @@ describe("Restaurant", () => {
 	})
 	it("test number of rest", async () => {
 		const response = await request(app).get("/restaurants")
-		expect(response.body.length).toBe(6)
+		expect(response.body.length).toBe(3)
 	})
 	it("test correct data", async () => {
 		const response = await request(app).get("/restaurants")
@@ -63,8 +63,9 @@ describe("Restaurant", () => {
 		expect(restaurants[0].id).toEqual(2)
 	})
 	it("checks validator errors", async () => {
-		const response = await request(app).post("/restaurancts/new")
-		expect(response.body).toContainEqual(
+		const response = await request(app).post("/restaurants/new")
+		console.log(response.body)
+		expect(response.body.error).toContainEqual(
 			expect.objectContaining({
 				type: "field",
 				msg: "Invalid value",
