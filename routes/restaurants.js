@@ -26,7 +26,7 @@ restRouter.get("/:id", async (req, res) => {
 	res.json(getRest)
 })
 
-restRouter.post("/new", [check(["name", "location", "cuisine"]).not().isEmpty().trim()], async (req, res) => {
+restRouter.post("/new", [check(["name", "location", "cuisine"]).not().isEmpty().trim(), check("name").isLength({ min: 10, max: 30 })], async (req, res) => {
 	const errors = validationResult(req)
 	if (!errors.isEmpty()) {
 		res.json({ error: errors.array() })

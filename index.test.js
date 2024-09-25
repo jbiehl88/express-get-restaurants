@@ -73,4 +73,16 @@ describe("Restaurant", () => {
 			})
 		)
 	})
+	it("checks validator for name length", async () => {
+		const response = await request(app).post("/restaurants/new").send({ name: "IDGA", location: "FW", cuisine: "Texas" })
+		expect(response.body.error).toContainEqual(
+			expect.objectContaining({
+				type: "field",
+				value: "IDGA",
+				msg: "Invalid value",
+				path: "name",
+				location: "body",
+			})
+		)
+	})
 })
