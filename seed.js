@@ -16,6 +16,6 @@ const syncSeed = async () => {
 	await menu.addItem(item)
 }
 
-syncSeed()
+// syncSeed()
 
 module.exports = syncSeed

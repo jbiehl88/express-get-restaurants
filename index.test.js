@@ -2,9 +2,14 @@ const request = require("supertest")
 const app = require("./src/app.js")
 const Restaurant = require("./models")
 const syncSeed = require("./seed.js")
+const db = require("./db/connection.js")
 
 beforeAll(async () => {
 	await syncSeed()
+})
+
+afterAll(async () => {
+	await db.sync({ force: true })
 })
 
 describe("Restaurant", () => {
@@ -56,5 +61,16 @@ describe("Restaurant", () => {
 		const response = await request(app).delete("/restaurants/1")
 		const restaurants = await Restaurant.findAll({})
 		expect(restaurants[0].id).toEqual(2)
+	})
+	it("checks validator errors", async () => {
+		const response = await request(app).post("/restaurancts/new")
+		expect(response.body).toContainEqual(
+			expect.objectContaining({
+				type: "field",
+				msg: "Invalid value",
+				path: "name",
+				location: "body",
+			})
+		)
 	})
 })
