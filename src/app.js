@@ -9,7 +9,18 @@ app.use(express.json())
 app.use(express.urlencoded())
 
 app.get("/restaurants", async (req, res) => {
-	let foundRestaurants = await Restaurant.findAll({})
+	let foundRestaurants = await Restaurant.findAll({
+		include: [
+			{
+				model: Menu, // Argument 1: Including Menus
+				include: [
+					{
+						model: Item, // Argument 2: Including MenuItems within Menus
+					},
+				],
+			},
+		],
+	})
 	res.json(foundRestaurants)
 })
 
